@@ -8,47 +8,59 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="Anti-Scam/main/templates/layout/stylesBase.css">
     <style>
-        body {
-            background-color: rgb(2, 0, 107);
-            color: white;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+    .navbar-custom {
+        background-color: #1B3C73; 
+    }
+    .navbar-brand {
+        font-size: 24px; 
+        font-weight: bold; 
+        color: #378CE7; 
+    }
+    .navbar-brand img {
+        height: 30px; 
+        margin-right: 10px; 
         }
 
-        .navbar-brand,
-        .navbar-nav .nav-link {
-            color: black; /* Color de los enlaces */
-            font-family: 'Figtree', sans-serif; /* Cambiar la tipografía */
-            font-weight: bold;
-        }
+        .italic {
+    font-style: italic;
+    }
 
-        .navbar-nav .nav-link:hover {
-            opacity: 0.8; /* Opacidad al pasar el cursor sobre los enlaces */
-            color: #F72798;
-        }
+    .mt-3{
+        background-color: #1B3C73;
+        border-color: #1B3C73;
+        border-radius: 50px;
+    }
 
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #0280c9;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Versión 1</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="Anti-Scam/media/logo.png"> ANTI-SCAM
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="/">Inicio</a>
-                    <a class="nav-item nav-link active" href="/insert_v">Verificar Vacante</a>
-                </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href=" ">Inicio</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-    
-    {% block content %}
-    {% endblock %}
+
+    <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
+        <h1 class="text-center">¡Bienvenido a Anti-Scam!</h1>
+        <h6 class="text-center italic">¿Qué quieres hacer hoy?</h6>
+        <a href="/insert_v" class="btn btn-primary mt-3">Verificar Vacantes</a>
+
+    </div>
+</body>
+
+{% block content %}
+{% endblock %}

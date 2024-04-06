@@ -1,7 +1,6 @@
 {% extends 'layout/base_v.html' %}
 
 {% block content %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,91 +9,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <title>ANTI-SCAM</title>
-    
     <style>
-        body {
-            background-color: rgb(2, 0, 107);
-            color: white;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .form-container {
+            background-color: #EEEEEE;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); 
+            margin: auto; 
+            max-width: 500px; 
+            opacity: 0.9; 
+            color: #1B3C73;
+            margin-top: 50px;
+        }
+        .btn-primary{
+            background-color: #1B3C73;
+            border-radius: 50px;
+            border-color: #1B3C73;
         }
 
-        h1 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .filter {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-top: 10px;
-        }
-
-        select, input {
-            margin-top: 5px;
-            padding: 5px;
-            border-radius: 15px;
-        }
     </style>
 </head>
 
 <body>
-    <h1>Ingresa los datos que dispongas de la vacante</h1>
 
-    <div class="container">
+    <div class="container form-container">
+        <h6 class="text-center">Ingresa los datos que dispongas de la vacante</h6>
         <form method="POST">
             {% csrf_token %}
             <div class="mb-3">
-              <label class="form-label">Correo del destinario:</label>
-              <input type="email" class="form-control" name="correo_d">
+                <label class="form-label">Correo del destinario:</label>
+                <input type="email" class="form-control" name="correo_d">
 
-              <label class="form-label">Correo de origen:</label>
-              <input type="email" class="form-control" name="correo_o">
+                <label class="form-label">Correo de origen:</label>
+                <input type="email" class="form-control" name="correo_o">
 
-              <label class="form-label">Titulo de la vacante:</label>
-              <input type="text" class="form-control" name="titulo">
-            
-              <label class="form-label">Nombre de la empresa:</label>
-              <input type="text" class="form-control" name="empresa">
+                <label class="form-label">Titulo de la vacante:</label>
+                <input type="text" class="form-control" name="titulo">
+                
+                <label class="form-label">Nombre de la empresa:</label>
+                <input type="text" class="form-control" name="empresa">
 
-              <label class="form-label">Telefono:</label>
-              <input type="tel" class="form-control" name="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                <label class="form-label">Telefono:</label>
+                <input type="tel" class="form-control" name="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
 
-              <label class="form-label">Fecha:</label>
-              <input type="date" class="form-control" name="fecha">
+                <label class="form-label">Fecha:</label>
+                <input type="date" class="form-control" name="fecha">
 
-              <label class="form-label">Descripción:</label>
-              <textarea type="textarea" class="form-control" name="descrip"></textarea>
+                <label class="form-label">Descripción:</label>
+                <textarea type="textarea" class="form-control" name="descrip"></textarea>
 
-              <label class="form-label">Mensaje de texto:</label>
-              <textarea type="textarea" class="form-control" name="texto"></textarea>
+                <label class="form-label">Mensaje de texto:</label>
+                <textarea type="textarea" class="form-control" name="texto"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
     </div>
 
 </body>
 </html>
+
 
 {% endblock %}

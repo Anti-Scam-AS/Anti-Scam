@@ -10,8 +10,7 @@
     <title>results_vacant</title>
     <style>
         body {
-            background-color: rgb(2, 0, 107);
-            color: white;
+            color: #1B3C73;
         }
 
         h1 {
@@ -39,15 +38,16 @@
             background-color:#F72798;
             border-color: #F72798;
         }
+        .text-center{
+            margin-top: 50px;
+        }
 
     </style>
 </head>
 <body>
     {% if not Ev %}
-            <h5>El correo NO se encuentra como correo de ninguna empresa ❌</h5>
+            <h5 class = "text-center">El correo NO se encuentra como correo de ninguna empresa</h5>
     {% endif %}
-    
-    <h1>Quizas estas buscando...</h1>
 
     <div>
         

@@ -1,4 +1,5 @@
 from django.db import models
+import copy
 
 # Create your models here.
 
@@ -16,3 +17,17 @@ class Vacant(models.Model):
 
     def __str__(self):
         return self.Titula
+
+    def clone(self):
+        return Vacant(
+            Fecha_envio=self.Fecha_envio,
+            Correo_dest=self.Correo_dest,
+            Correo_org=self.Correo_org,
+            Titula=self.Titula,
+            telefono=self.telefono,
+            nom_empresa=self.nom_empresa,
+            descripcion=self.descripcion,
+            texto_t=self.texto_t,
+            url_vacante=self.url_vacante,
+            url_empresa=self.url_empresa
+        )

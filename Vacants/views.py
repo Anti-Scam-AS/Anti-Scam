@@ -7,6 +7,15 @@ from main.models import Vacant
 
 vacant = ""
 
+v = Vacant.objects.get(pk=1)
+new_v = v.clone()
+
+new_v.id = None
+new_v.save()
+
+print(v)
+print()
+
 
 def insert_vacant(request):
     if request.method == 'GET':

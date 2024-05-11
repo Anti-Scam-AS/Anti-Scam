@@ -55,9 +55,11 @@
 
         {% for f in fil %}
             {% if values.1 == f.Correo_org %}
-                <h5>El correo {{ f.Correo_org }} se encuentra como correo de la empresa {{ f.nom_empresa }} ✅</h5>
+            <h5 class = "text-center">El correo {{ f.Correo_org }} se encuentra como correo de la empresa {{ f.nom_empresa }} ✅</h5>
 
-                {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
+            <h1 class = "text-center">Podrías estar buscando:</h5>
+                <div class="center">
+                    {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h3 class="card-title">{{ f.Titula }}</h3>
@@ -69,11 +71,17 @@
                             <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
                             <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
                         </div>
-                        
                     </div>
                 {% endif %}
+
+                </div>
+                
             {% endif %}
         {% endfor %}
+        <div class="d-grid gap-2">
+            <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>
+        </div>
+        
 
         
     </div>

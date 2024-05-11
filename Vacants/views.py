@@ -7,14 +7,11 @@ from main.models import Vacant
 
 vacant = ""
 
-v = Vacant.objects.get(pk=1)
-new_v = v.clone()
 
-new_v.id = None
-new_v.save()
 
-print(v)
-print()
+
+verification_points = 0
+verification_results = {}
 
 
 def insert_vacant(request):
@@ -57,3 +54,73 @@ def verify_vacant(request):
         return render(request, "verify_vacant_email.html", contex)
     elif values[4] != "":
         return render(request, "verify_vacant_tel.html", contex)
+    
+
+def analyzed_vacant(request):
+    global vacant
+
+    c_det = False
+    c_org = False
+    titulo = False
+    nombre = False
+    tel = False
+    fecha = False
+
+    fil = Vacant.objects.all()
+    values = list(vacant.values())[1:]
+    dateV = ""
+
+    if values[5] != "":
+        dateV = datetime.strptime(values[5], '%Y-%m-%d').date()
+
+    for i in fil:
+        verification_points = 0
+        print(i.Correo_dest)
+        print(values)
+        if values[0] == i.Correo_dest and values[0] != "":
+            verification_points = verification_points + 1
+            c_det = True
+
+        if values[1] == i.Correo_org and values[1] != "":
+            verification_points = verification_points + 1
+            c_org = True
+        
+        if values[2] == i.Titula and values[2] != "":
+            verification_points = verification_points + 1
+            titulo = True
+
+        if values[3] == i.nom_empresa and values[3] != "":
+            verification_points = verification_points + 1
+            nombre = False
+
+        if values[4] == i.telefono and values[4] != "":
+            verification_points = verification_points + 1
+            tel = True
+
+        if dateV == i.Fecha_envio and values[5] != "":
+            verification_points = verification_points + 1
+            fecha = True
+
+        verification_results[i.Titula] = verification_points
+
+    print(f'v: {verification_results}')
+
+    results = []
+
+    results.append(c_det)
+    results.append(c_org)
+    results.append(titulo)
+    results.append(nombre)
+    results.append(tel)
+    results.append(fecha)
+    
+
+
+    
+
+
+    contex = {"fil": fil, "values": values, "results": results}
+
+    print(results)
+
+    return render(request, "verify_vacant.html", contex)

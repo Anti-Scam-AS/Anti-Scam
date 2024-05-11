@@ -43,10 +43,9 @@
 </head>
 <body>
     {% if not Tv %}
-            <h5>El numero NO se encuentra como telefono de ninguna empresa</h5>
+            <h5 class="text-center">El numero NO se encuentra como telefono de ninguna empresa</h5>
     {% endif %}
     
-    <h1>Quizas estas buscando...</h1>
 
     <div>
         
@@ -54,7 +53,9 @@
 
         {% for f in fil %}
             {% if values.4 == f.telefono %}
-                <h5>El numero {{ f.telefono }} se encuentra como telefono de la empresa {{ f.nom_empresa }} ✅</h5>
+                <h5 class="text-center">El numero {{ f.telefono }} se encuentra como telefono de la empresa {{ f.nom_empresa }} ✅</h5>
+
+                <h1 class = "text-center">Podrías estar buscando:</h5>
 
                 {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
                     <div class="card" style="width: 18rem;">

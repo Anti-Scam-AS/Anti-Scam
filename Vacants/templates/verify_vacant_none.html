@@ -42,41 +42,36 @@
     </style>
 </head>
 <body>
-    {% if not Tv %}
-            <h5 class="text-center">El numero NO se encuentra como telefono de ninguna empresa</h5>
-    {% endif %}
-    
 
     <div>
+
+        <h5 class="text-center">No has introducido ningún número o correo ❌</h5>
+
+        <h1 class = "text-center">Podrías estar buscando:</h5>
         
-
-
         {% for f in fil %}
-            {% if values.4 == f.telefono %}
-                <h5 class="text-center">El numero {{ f.telefono }} se encuentra como telefono de la empresa {{ f.nom_empresa }} ✅</h5>
+            
 
-                <h1 class = "text-center">Podrías estar buscando:</h5>
-
-                {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h3 class="card-title">{{ f.Titula }}</h3>
-                            <h5 class="card-title">{{ f.Correo_org }}</h5>
-                            <h5 class="card-title">{{ f.Telefono }}</h5>
-                            <h5 class="card-title">{{ f.Fecha_envio }}</h5>
-                            <h5 class="card-title">{{ f.nom_empresa }}</h5>
-                            <p class="card-text">{{ f.descripcion }}</p>
-                            <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
-                            <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
-                        </div>
+            {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ f.Titula }}</h3>
+                        <h5 class="card-title">{{ f.Correo_org }}</h5>
+                        <h5 class="card-title">{{ f.Telefono }}</h5>
+                        <h5 class="card-title">{{ f.Fecha_envio }}</h5>
+                        <h5 class="card-title">{{ f.nom_empresa }}</h5>
+                        <p class="card-text">{{ f.descripcion }}</p>
+                        <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
+                        <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
                     </div>
-                {% endif %}
+                </div>
             {% endif %}
         {% endfor %}
 
         <div class="d-grid gap-2">
             <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>
         </div>
+
         
     </div>
 

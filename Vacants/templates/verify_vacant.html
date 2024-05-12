@@ -49,36 +49,115 @@
     <div class="card">
         <div class="card-body">
             {% if results.0 == True %}
-                <h5 class="card-title">Una oferta laboral fue enviada a este correo✅</h5>
+                <h5 class="card-title">Una oferta laboral fue enviada a este correo ✅</h5>
             {% else %}
-                <h5 class="card-title">Ninguna oferta laboral fue enviada a este correo❌</h5>
+                <h5 class="card-title">Ninguna oferta laboral fue enviada a este correo ❌</h5>
             {% endif %}
-            {% if results.1 == True %}
-                <h5 class="card-title">Existe un correo empresarial con las mismas caracteristicas✅</h5>
-            {% else %}
-                <h5 class="card-title">No existe un correo empresarial con las mismas caracteristicas❌</h5>
+
+            {% if results.9 == True %}
+                {% if results.1 == True %}
+                    <h5 class="card-title">Existe un correo empresarial con las mismas caracteristicas ✅</h5>
+                {% else %}
+                    <h5 class="card-title">No existe un correo empresarial con las mismas caracteristicas ❌</h5>
+                {% endif %}
             {% endif %}
+            
             {% if results.2 == True %}
-                <h5 class="card-title">Hay una oferta laboral con el mismo nombre✅</h5>
+                <h5 class="card-title">Hay una oferta laboral con el mismo nombre ✅</h5>
             {% else %}
-                <h5 class="card-title">No existe una oferta laboral con el mismo nombre❌</h5>
+                <h5 class="card-title">No existe una oferta laboral con el mismo nombre ❌</h5>
             {% endif %}
             {% if results.3 == True %}
-                <h5 class="card-title">Hay una empresa vinculada con el mismo nombre✅</h5>
+                <h5 class="card-title">Hay una empresa vinculada con el mismo nombre ✅</h5>
             {% else %}
-                <h5 class="card-title">No hay una empresa vinculada con el mismo nombre❌</h5>
+                <h5 class="card-title">No hay una empresa vinculada con el mismo nombre ❌</h5>
             {% endif %}
-            {% if results.4 == True %}
-                <h5 class="card-title">Hay una empresa vinculada con el mismo telefono✅</h5>
-            {% else %}
-                <h5 class="card-title">No hay una empresa vinculada con el mismo telefono❌</h5>
+
+            {% if results.10 == True %}
+                {% if results.4 == True %}
+                    <h5 class="card-title">Hay una empresa vinculada con el mismo telefono ✅</h5>
+                {% else %}
+                    <h5 class="card-title">No hay una empresa vinculada con el mismo telefono ❌</h5>
+                {% endif %}
             {% endif %}
+            
             {% if results.5 == True %}
-                <h5 class="card-title">Hay una oferta laboral publicada en la misma fecha✅</h5>
+                <h5 class="card-title">Hay una oferta laboral publicada en la misma fecha ✅</h5>
             {% else %}
-                <h5 class="card-title">No hay una oferta laboral publicada en la misma fecha❌</h5>
+                <h5 class="card-title">No hay una oferta laboral publicada en la misma fecha ❌</h5>
             {% endif %}
+
+            {% if results.9 == True %}
+                {% if results.6 == True and results.8 == True %}
+                    <h5 class="card-title">La descripción es confiable y no tiene errores ortográficos. ✅</h5>
+                {% elif results.6 == True and results.8 == False %}
+                    <h5 class="card-title">La descripción es confiable pero tiene varios errores ortográficos. ➖</h5>
+                {% else %}
+                    <h5 class="card-title">La descripción NO es confiable. ❌</h5>
+                {% endif %}
+            {% endif %}
+
+            {% if results.10 == True %}
+                {% if results.7 == True and results.8 == True %}
+                    <h5 class="card-title">La descripción es confiable y no tiene errores ortográficos. ✅</h5>
+                {% elif results.7 == True and results.8 == False %}
+                    <h5 class="card-title">La descripción es confiable pero tiene varios errores ortográficos. ➖</h5>
+                {% else %}
+                    <h5 class="card-title">La descripción NO es confiable. ❌</h5>
+                {% endif %}
+            {% endif %}
+           
         </div>
+    </div>
+
+    <div>
+        {% if verification < 0 %}
+            <h5 class="card-title">NO se recomienda para nada aplicar a esta vacante, ninguna de sus características concuerda con alguna de nuestras vacantes, además de que la descripción brindada no es para nada fiable, se recomienda reportar.</h5>
+        {% endif %}
+
+        {% if 0 < verification and verification <= 2 %}
+            <h5 class="card-title">La vacante cumple con muy pocos requisitos como para ser considerada fiable </h5>
+            {% if results.9 == True %}
+                {% if results.6 == True%}
+                    <h5 class="card-title">Dado que el requerimiento de descripción ha sido verificado, se le puede recomendar indagar por más información y volver a ingresar los nuevos datos.</h5>
+                {% else %}
+                    <h5 class="card-title">Como el requerimiento de descripción no ha sido verificado, se le recomienda reportar la vacante para que sea enviada a revisión.</h5>
+                {% endif %}
+            {% endif %}
+
+            {% if results.10 == True %}
+                {% if results.7 == True%}
+                    <h5 class="card-title">Dado que el requerimiento de descripción ha sido verificado, se le puede recomendar indagar por más información y volver a ingresar los nuevos datos.</h5>
+                {% else %}
+                    <h5 class="card-title">Como el requerimiento de descripción no ha sido verificado, se le recomienda reportar la vacante para que sea enviada a revisión.</h5>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+
+        {% if 2 < verification and verification < 5 %}
+            <h5 class="card-title">La vacante cumple con los suficientes requisitos como para ser considerada fiable </h5>
+            {% if results.9 == True %}
+                {% if results.6 == True%}
+                    <h5 class="card-title">Además de que, como la descripción parece verídica, puede considerar aplicar a la oferta. Tenga en cuenta posible información que se le envíe a futuro para así evitar posibles estafas.</h5>
+                {% else %}
+                    <h5 class="card-title">Aun así, la descripción parece poco fiable, por lo que se recomienda tener bastante precaución si es que considera aplicar a la vacante. Revisé muy bien que no pidan algún tipo de transacción monetaria y esté pendiente de otros factores en el momento de aplicación.</h5>
+                {% endif %}
+            {% endif %}
+
+            {% if results.10 == True %}
+                {% if results.7 == True%}
+                    <h5 class="card-title">Además de que, como la descripción parece verídica, puede considerar aplicar a la oferta. Tenga en cuenta posible información que se le envíe a futuro para así evitar posibles estafas.</h5>
+                {% else %}
+                    <h5 class="card-title">Aun así, la descripción parece poco fiable, por lo que se recomienda tener bastante precaución si es que considera aplicar a la vacante. Revisé muy bien que no pidan algún tipo de transacción monetaria y esté pendiente de otros factores en el momento de aplicación.</h5>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+
+        {% if 5 <= verification and  verification <= 7 %}
+            <h5 class="card-title">La vacante cumple con todos los requisitos, además de contar con una descripción formal, se puede aplicar sin miedo alguno. </h5>
+        {% endif %}
     </div>
 
     

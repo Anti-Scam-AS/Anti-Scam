@@ -3,12 +3,32 @@ from datetime import datetime
 
 from main.models import Vacant
 
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+from spellchecker import SpellChecker
+
+spell = SpellChecker(language='es')
+
 # Create your views here.
 
 vacant = ""
 
 
+def analyze_description(description):
 
+    words = description.split()
+
+    errors = spell.unknown(words)
+
+    # Análisis de sentimientos
+    sia = SentimentIntensityAnalyzer()
+    result = sia.polarity_scores(description)
+
+    return {
+        'result': result,
+        'errors': errors,
+        "word_quantity": len(words)
+    }
 
 verification_points = 0
 verification_results = {}
@@ -54,7 +74,8 @@ def verify_vacant(request):
         return render(request, "verify_vacant_email.html", contex)
     elif values[4] != "":
         return render(request, "verify_vacant_tel.html", contex)
-    
+    else:
+        return render(request, "verify_vacant_none.html", contex)
 
 def analyzed_vacant(request):
     global vacant
@@ -65,18 +86,24 @@ def analyzed_vacant(request):
     nombre = False
     tel = False
     fecha = False
+    descrip = False
+    text = False
+    graphy = False
+
+    tele = False
+    email = False
+
 
     fil = Vacant.objects.all()
     values = list(vacant.values())[1:]
     dateV = ""
+       
 
     if values[5] != "":
         dateV = datetime.strptime(values[5], '%Y-%m-%d').date()
 
     for i in fil:
         verification_points = 0
-        print(i.Correo_dest)
-        print(values)
         if values[0] == i.Correo_dest and values[0] != "":
             verification_points = verification_points + 1
             c_det = True
@@ -91,7 +118,7 @@ def analyzed_vacant(request):
 
         if values[3] == i.nom_empresa and values[3] != "":
             verification_points = verification_points + 1
-            nombre = False
+            nombre = True
 
         if values[4] == i.telefono and values[4] != "":
             verification_points = verification_points + 1
@@ -103,7 +130,45 @@ def analyzed_vacant(request):
 
         verification_results[i.Titula] = verification_points
 
-    print(f'v: {verification_results}')
+    verification_points = 0
+
+    if values[6] != "":
+        email = True
+        Result_description = analyze_description(values[6])
+
+        print("Análisis de sentimientos:", Result_description['result']["compound"])
+
+        if Result_description['result']["compound"] >= 0.0 and Result_description['result']["compound"] < 0.5 and len(Result_description['errors']) <= Result_description['word_quantity']-(Result_description['word_quantity']/2):
+            verification_points = verification_points + 2
+            descrip = True
+            graphy = True
+
+        elif Result_description['result']["compound"] >= 0.0 and Result_description['result']["compound"] < 0.5:
+            verification_points = verification_points + 1
+            descrip = True
+
+        else:
+            verification_points = verification_points - 2
+            descrip = False
+
+    if values[7] != "":
+        tele = True
+        Result_description = analyze_description(values[7])
+
+        print("Análisis de sentimientos:", Result_description['result'])
+
+        if Result_description['result']["compound"] >= 0.0 and Result_description['result']["compound"] < 0.5 and len(Result_description['errors']) <= Result_description['word_quantity']-(Result_description['word_quantity']/2):
+            verification_points = verification_points + 2
+            text = True
+            graphy = True
+
+        elif Result_description['result']["compound"] >= 0.0 and Result_description['result']["compound"] < 0.5:
+            verification_points = verification_points + 1
+            text = True
+
+        else:
+            verification_points = verification_points - 2
+            text = False
 
     results = []
 
@@ -113,14 +178,36 @@ def analyzed_vacant(request):
     results.append(nombre)
     results.append(tel)
     results.append(fecha)
-    
+    results.append(descrip)
+    results.append(text)
+    results.append(graphy)
+    results.append(email)
+    results.append(tele)
 
+    print(descrip)
+    print(email)
+    print(text)
 
-    
+    if c_det:
+        verification_points = verification_points + 1
 
+    if c_org:
+        verification_points = verification_points + 1
 
-    contex = {"fil": fil, "values": values, "results": results}
+    if titulo:
+        verification_points = verification_points + 1
 
-    print(results)
+    if nombre:
+        verification_points = verification_points + 1
+
+    if tel:
+        verification_points = verification_points + 1
+
+    if fecha:
+        verification_points = verification_points + 1
+
+    print(verification_points)
+
+    contex = {"fil": fil, "values": values, "results": results, "verification": verification_points}
 
     return render(request, "verify_vacant.html", contex)

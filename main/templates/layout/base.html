@@ -7,39 +7,58 @@
     <title>ANTI-SCAM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="/media/internet-security.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Anti-Scam/main/templates/layout/stylesBase.css">
     <style>
     .navbar-custom {
-        background-color: #1B3C73; 
+        background-color: #F2F3F3; 
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     }
     .navbar-brand {
         font-size: 24px; 
         font-weight: bold; 
-        color: #378CE7; 
+        color: #064ACB !important; 
     }
     .navbar-brand img {
-        height: 30px; 
+        height: 60px; 
         margin-right: 10px; 
-        }
+    }
 
-        .italic {
-    font-style: italic;
+    .italic {
+        font-style: italic;
+        color: #064ACB;
     }
 
     .mt-3{
-        background-color: #1B3C73;
+        background-color: black;
         border-color: #1B3C73;
         border-radius: 50px;
     }
 
+    .image-container {
+        width: 50%;
+        float: right;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        .image-container {
+            width: 20%;
+            float: right;
+        }
+    }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="/media/logo.png"> ANTI-SCAM
+                <img src="/media/internet-security.png"> ANTI-SCAM
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -54,11 +73,19 @@
         </div>
     </nav>
 
-    <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
-        <h1 class="text-center">¡Bienvenido a Anti-Scam!</h1>
-        <h6 class="text-center italic">¿Qué quieres hacer hoy?</h6>
-        <a href="/insert_v" class="btn btn-primary mt-3">Verificar Vacantes</a>
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container d-flex flex-column align-items-center justify-content-center vh-100">
+                    <h1 class="text-center">¡Bienvenido a Anti-Scam!</h1>
+                    <h6 class="text-center italic">¿Qué quieres hacer hoy?</h6>
+                    <a href="/insert_v" class="btn btn-primary mt-3">Verificar Vacantes</a>
+                </div>
+            </div>
+            <div class="col-md-6 image-container">
+                <img src="media/laptop.png" alt="Imagen">
+            </div>
+        </div>
     </div>
 </body>
 

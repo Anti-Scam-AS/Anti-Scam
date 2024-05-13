@@ -8,6 +8,10 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from spellchecker import SpellChecker
 
 spell = SpellChecker(language='es')
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('vader_lexicon')
 
 # Create your views here.
 

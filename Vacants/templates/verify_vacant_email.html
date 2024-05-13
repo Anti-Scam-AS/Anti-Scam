@@ -1,6 +1,5 @@
 {% extends 'layout/base_v.html' %}
 {% block content %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,55 +8,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>results_vacant</title>
     <style>
-        body {
-            color: #1B3C73;
+        .navbar-custom {
+            background-color: #F2F3F3; 
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #navbar-text {
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #064ACB !important;
+        }
+        .navbar-brand img {
+            height: 60px; 
+            margin-right: 10px; 
+        }
+    
+        .mt-3{
+            background-color: black;
+            border-color: #1B3C73;
+            border-radius: 50px;
         }
 
-        h1 {
-            margin-top: 100px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .result {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; 
-        }
-
-        .btn-yellow {
-        background-color: #F57D1F;
-        border-color: #F57D1F;
-        }
-
-        .btn-yellow:hover {
-            background-color:#F72798;
-            border-color: #F72798;
-        }
         .text-center{
             margin-top: 50px;
         }
 
+        .btn-primary{
+            width: 100px;
+            border-radius: 100px;
+        }
     </style>
 </head>
 <body>
     {% if not Ev %}
-            <h5 class = "text-center">El correo NO se encuentra como correo de ninguna empresa</h5>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h5>¡Oh, no! El correo no se encuentra como correo de ninguna empresa</h5>
+                <img src="/media/attention.png" class="img-fluid" alt="Error Image" style="max-width: 300px;">
+            </div>
+        </div>
+    </div>
     {% endif %}
 
     <div>
-        
-
-
         {% for f in fil %}
             {% if values.1 == f.Correo_org %}
-            <h5 class = "text-center">El correo {{ f.Correo_org }} se encuentra como correo de la empresa {{ f.nom_empresa }} ✅</h5>
+            <h5 class="text-center">El correo {{ f.Correo_org }} se encuentra como correo de la empresa {{ f.nom_empresa }} ✅</h5>
 
-            <h1 class = "text-center">Podrías estar buscando:</h5>
+            <h1 class="text-center">Podrías estar buscando:</h5>
                 <div class="center">
                     {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
                     <div class="card" style="width: 18rem;">
@@ -73,28 +71,20 @@
                         </div>
                     </div>
                 {% endif %}
-
                 </div>
                 
             {% endif %}
         {% endfor %}
-        <div class="d-grid gap-2">
+        <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
             <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>
         </div>
-        
-
-        
     </div>
-
     
-
     <div>
         {% for f in fil %}
             
         {% endfor %}
     </div>
-    
-    
 </body>
 </html>
 {% endblock %}

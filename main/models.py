@@ -39,5 +39,24 @@ class Vacant_report(models.Model):
     Report = models.TextField()
     verification = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.Titula_c
 
+class update_vacante_command:
+    def __init__(self, Vacant_report, Report, verification):
+        self.Vacant_report = Vacant_report
+        self.Vacant_report.Report = Report
+        self.Vacant_report.verification = verification
+
+    def execute(self):
+        self.Vacant_report.save()
+
+
+class delete_vacante_command:
+    def __init__(self, Vacant_report):
+        self.Vacant_report = Vacant_report
+
+    def execute(self):
+        self.Vacant_report.delete()
+        
 

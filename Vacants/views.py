@@ -3,7 +3,7 @@ from datetime import datetime
 
 import uuid
 
-from main.models import Vacant, Vacant_report
+from main.models import Vacant, Vacant_report, delete_vacante_command, update_vacante_command
 
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -18,6 +18,33 @@ nltk.download('vader_lexicon')
 # Create your views here.
 
 vacant = ""
+
+def report_vacant(request):
+    fil = Vacant_report.objects.all()
+
+    contex = {"fil": fil}
+
+    if request.method == 'GET':
+        return render(request, "verify_report.html", contex)
+    else:
+        order = request.POST
+
+        vacant = Vacant_report.objects.get(Titula_c = order["titulo_reportado"])
+
+        if order["orden"] == "actualizar":
+            if order["verification"] != None:
+                ver = False
+            else:
+                ver = True
+            command = update_vacante_command(vacant, order["report"], ver)
+            command.execute()
+
+        if order["orden"] == "borrar":
+            command = delete_vacante_command(vacant)
+            command.execute()
+
+        return render(request, "verify_report.html", contex)
+
 
 
 def analyze_description(description):

@@ -1,0 +1,88 @@
+{% extends 'layout/base_v.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>results_vacant</title>
+    <style>
+        .navbar-custom {
+            background-color: #F2F3F3; 
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #navbar-text {
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #064ACB !important;
+        }
+        .navbar-brand img {
+            height: 60px; 
+            margin-right: 10px; 
+        }
+    
+        .mt-3{
+            background-color: black;
+            border-color: #1B3C73;
+            border-radius: 50px;
+        }
+
+        .text-center{
+            margin-top: 50px;
+        }
+
+        .btn-primary{
+            width: 100px;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="center">
+            <div class="d-flex flex-wrap justify-content-center">
+                {% for f in fil %}
+                    {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
+                        <div class="card m-2" style="width: 18rem;">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ f.Titula_c }}</h3>
+                                <h5 class="card-title">{{ f.Correo_org_c }}</h5>
+                                <h5 class="card-title">{{ f.Telefono_c }}</h5>
+                                <h5 class="card-title">{{ f.Fecha_envio_c }}</h5>
+                                <h5 class="card-title">{{ f.nom_empresa_c }}</h5>
+                                <p class="card-text">{{ f.descripcion_c }}</p>
+        
+                                <div class="d-flex justify-content-center align-items-center" style="height: 10vh; margin-bottom: 50px;">
+                                    <form method="post" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="titulo_reportado" value="{{ f.Titula_c }}">
+                                        <input type="hidden" name="orden" value="actualizar">
+                                        <h5>Reporte:</h5>
+                                        <textarea type="textarea" class="form-control" name="report"></textarea>
+                                        <input type="checkbox" id="checkbox" name="verification">
+                                        <button type="submit" name="actualizar" class="btn btn-primary">actualizar</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="justify-content-center align-items-center" style="height: 10vh; margin-top: 50px;">
+                                    <form method="post" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="titulo_reportado" value="{{ f.Titula_c }}">
+                                        <input type="hidden" name="orden" value="borrar">
+                                        <button type="submit" name="borrar" class="btn btn-primary">borrar</button>
+                                    </form>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
+{% endblock %}

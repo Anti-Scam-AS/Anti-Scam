@@ -66,9 +66,22 @@
                             <h5 class="card-title">{{ f.Fecha_envio }}</h5>
                             <h5 class="card-title">{{ f.nom_empresa }}</h5>
                             <p class="card-text">{{ f.descripcion }}</p>
-                            <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
-                            <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
+
+                            <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
+                                <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
+                                <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
+                            </div>
+                            
                         </div>
+
+                        <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" name="titulo_reportado" value="{{ f.Titula }}">
+                                <button type="submit" name="reportar" class="btn btn-primary">Reportar</button>
+                            </form>
+                        </div>
+                        
                     </div>
                 {% endif %}
                 </div>
@@ -80,11 +93,6 @@
         </div>
     </div>
     
-    <div>
-        {% for f in fil %}
-            
-        {% endfor %}
-    </div>
 </body>
 </html>
 {% endblock %}

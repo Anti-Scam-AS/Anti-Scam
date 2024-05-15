@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-from main.models import Vacant
+import uuid
+
+from main.models import Vacant, Vacant_report
 
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -74,12 +76,41 @@ def verify_vacant(request):
 
     contex = {"fil": fil, "values": values, "date": dateV, "Ev": email_verificator, "Tv": tel_verificator}
 
+    if request.method == 'POST' and 'reportar' in request.POST:
+        titulo_reportado = request.POST.get('titulo_reportado')
+
+        original = Vacant.objects.get(Titula=titulo_reportado)
+
+        prototype = original.clone()
+
+
+        new_report = Vacant_report.objects.create(
+            id = prototype.id,
+            Fecha_envio_c=prototype.Fecha_envio,
+            Correo_dest_c=prototype.Correo_dest,
+            Correo_org_c=prototype.Correo_org,
+            Titula_c=prototype.Titula,
+            telefono_c=prototype.telefono,
+            nom_empresa_c=prototype.nom_empresa,
+            descripcion_c=prototype.descripcion,
+            texto_t_c=prototype.texto_t,
+            url_vacante_c=prototype.url_vacante,
+            url_empresa_c=prototype.url_empresa,
+            Report='',
+            verification=False
+        )
+
+        new_report.save()
+
+        
     if values[1] != "":
         return render(request, "verify_vacant_email.html", contex)
     elif values[4] != "":
         return render(request, "verify_vacant_tel.html", contex)
     else:
         return render(request, "verify_vacant_none.html", contex)
+
+    
 
 def analyzed_vacant(request):
     global vacant

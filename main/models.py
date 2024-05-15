@@ -18,16 +18,26 @@ class Vacant(models.Model):
     def __str__(self):
         return self.Titula
 
-    def clone(self):
-        return Vacant(
-            Fecha_envio=self.Fecha_envio,
-            Correo_dest=self.Correo_dest,
-            Correo_org=self.Correo_org,
-            Titula=self.Titula,
-            telefono=self.telefono,
-            nom_empresa=self.nom_empresa,
-            descripcion=self.descripcion,
-            texto_t=self.texto_t,
-            url_vacante=self.url_vacante,
-            url_empresa=self.url_empresa
-        )
+    def clone(self, **kwargs):
+        obj = self.__class__(**kwargs)
+        obj.__dict__.update(self.__dict__)
+        obj.pk = None
+        return obj
+    
+
+class Vacant_report(models.Model):
+    Fecha_envio_c = models.DateField(null=True)
+    Correo_dest_c = models.EmailField(blank=True)
+    Correo_org_c = models.EmailField(blank=True)
+    Titula_c = models.CharField(max_length=120)
+    telefono_c = models.CharField(max_length=13, default='')
+    nom_empresa_c = models.CharField(max_length=60, default='')
+    descripcion_c = models.TextField(default='')
+    texto_t_c = models.TextField(default='')
+    url_vacante_c = models.URLField(max_length=200,  default='')
+    url_empresa_c = models.URLField(max_length=200,  default='')
+    Report = models.TextField()
+    verification = models.BooleanField(default=False)
+
+
+

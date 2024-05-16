@@ -95,6 +95,8 @@
         <div class="card-body">
             {% if results.0 == True %}
                 <h5 class="card-title">Una oferta laboral fue enviada a este correo ✅</h5>
+            {% elif results.0 == False and results.4 == True %}
+
             {% else %}
                 <h5 class="card-title">Ninguna oferta laboral fue enviada a este correo ❌</h5>
             {% endif %}
@@ -118,13 +120,14 @@
                 <h5 class="card-title">No hay una empresa vinculada con el mismo nombre ❌</h5>
             {% endif %}
 
-            {% if results.10 == True %}
-                {% if results.4 == True %}
-                    <h5 class="card-title">Hay una empresa vinculada con el mismo telefono ✅</h5>
-                {% else %}
-                    <h5 class="card-title">No hay una empresa vinculada con el mismo telefono ❌</h5>
-                {% endif %}
+            {% if results.4 == True %}
+                <h5 class="card-title">Hay una empresa vinculada con el mismo telefono ✅</h5>
+            {% elif results.0 == True and results.4 == False %}
+
+            {% else %}
+                <h5 class="card-title">No hay una empresa vinculada con el mismo telefono ❌</h5>
             {% endif %}
+
             
             {% if results.5 == True %}
                 <h5 class="card-title">Hay una oferta laboral publicada en la misma fecha ✅</h5>
@@ -151,10 +154,16 @@
                     <h5 class="card-title">La descripción NO es confiable. ❌</h5>
                 {% endif %}
             {% endif %}
-           
+
+
+            {% if results.10 == False and results.9 == False and results.7 == False %}
+            <h5 class="card-title">No se ha enviado ninguna descripción. ❌</h5>
+            {% endif %}
         </div>
     </div>
 </div>
+
+<h1>Recomendaciones:</h1>
 
 <div class="d-flex justify-content-center mt-3">
     <ul>
@@ -203,8 +212,14 @@
 
 
         {% if 5 <= verification and  verification <= 7 %}
-            <li><h5 class="card-title">La vacante cumple con todos los requisitos, además de contar con una descripción formal, se puede aplicar sin miedo alguno. </h5></li>
+            <li><p class="card-title">La vacante cumple con todos los requisitos o con la gran mayoría, además de contar con una descripción formal, se puede aplicar de manera segura, siempre teniendo en cuenta que es tu responsabilidad estar pendiente de cualquier irregularidad. </p></li>
         {% endif %}
+
+        
+        {% if results.7 == False and results.10 == False and results.9 == False%}
+            <li><p class="card-title">Ten en cuenta que no has ingresado alguna descripción sobre la vacante, lo que nos hace mucho más difícil darte un veredicto justo sobre la veracidad de la oferta. Se te recomiendo conseguir más información con el objetivo de que la puedas proporcionar y así brindarte un mejor servicio.</p></li>
+        {% endif %}
+
     </ul>
 </div>
 

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-import uuid
+from django.core.mail import EmailMessage, get_connection
 
-from main.models import Vacant, Vacant_report, delete_vacante_command, update_vacante_command
+from django.conf import settings
+
+from main.models import Vacant, Vacant_report, delete_vacante_command, update_vacante_command, Admin
 
 from nltk.sentiment import SentimentIntensityAnalyzer
 
@@ -21,6 +23,8 @@ vacant = ""
 
 def report_vacant(request):
     fil = Vacant_report.objects.all()
+
+    admin = Admin.objects.get(pk=1)
 
     contex = {"fil": fil}
 
@@ -40,6 +44,7 @@ def report_vacant(request):
             command.execute()
 
         if order["orden"] == "borrar":
+            admin.delete_sub(vacant.Titula_c)
             command = delete_vacante_command(vacant)
             command.execute()
 
@@ -78,6 +83,11 @@ def insert_vacant(request):
         return redirect("verify/")
     
 
+def admin_page(request):
+    admin = Admin.objects.get(pk=1)
+    vacants = [vacant for vacant in admin.vacants_wait.split(',')]
+    return render(request, "Admin_page.html", {"admin": admin, "vacants": vacants})
+
 def verify_vacant(request):
     global vacant
     fil = Vacant.objects.all()
@@ -110,26 +120,55 @@ def verify_vacant(request):
 
         prototype = original.clone()
 
+        if not Vacant_report.objects.filter(Titula_c=prototype.Titula).exists():
+            new_report = Vacant_report.objects.create(
+                id = prototype.id,
+                Fecha_envio_c=prototype.Fecha_envio,
+                Correo_dest_c=prototype.Correo_dest,
+                Correo_org_c=prototype.Correo_org,
+                Titula_c=prototype.Titula,
+                telefono_c=prototype.telefono,
+                nom_empresa_c=prototype.nom_empresa,
+                descripcion_c=prototype.descripcion,
+                texto_t_c=prototype.texto_t,
+                url_vacante_c=prototype.url_vacante,
+                url_empresa_c=prototype.url_empresa,
+                Report='',
+                verification=False
+            )
 
-        new_report = Vacant_report.objects.create(
-            id = prototype.id,
-            Fecha_envio_c=prototype.Fecha_envio,
-            Correo_dest_c=prototype.Correo_dest,
-            Correo_org_c=prototype.Correo_org,
-            Titula_c=prototype.Titula,
-            telefono_c=prototype.telefono,
-            nom_empresa_c=prototype.nom_empresa,
-            descripcion_c=prototype.descripcion,
-            texto_t_c=prototype.texto_t,
-            url_vacante_c=prototype.url_vacante,
-            url_empresa_c=prototype.url_empresa,
-            Report='',
-            verification=False
-        )
+            new_report.save()
 
-        new_report.save()
+            admin = Admin.objects.get(pk=1)
 
-        
+            admin.update_sub(new_report.Titula_c)
+
+
+        else:
+            if values[1] != "":
+                return render(request, "verify_vacant_email.html", contex)
+            elif values[4] != "":
+                return render(request, "verify_vacant_tel.html", contex)
+            else:
+                return render(request, "verify_vacant_none.html", contex)
+
+
+        """with get_connection(  
+            host=settings.EMAIL_HOST, 
+            port=settings.EMAIL_PORT,  
+            username=settings.EMAIL_HOST_USER, 
+            password=settings.EMAIL_HOST_PASSWORD, 
+            use_tls=settings.EMAIL_USE_TLS  
+        ) as connection:
+            subject='Correo de prueba',
+            message='Buenas ¿como estas?',
+            email_from=settings.EMAIL_HOST_USER,
+            recipient_list=[admin.email,]
+
+            EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
+        """
+
+
     if values[1] != "":
         return render(request, "verify_vacant_email.html", contex)
     elif values[4] != "":

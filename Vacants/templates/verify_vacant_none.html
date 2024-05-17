@@ -48,25 +48,64 @@
                 <img src="/media/ransomware.png" class="img-fluid" alt="Error Image" style="max-width: 300px;">
             </div>
         </div>
-        
-        {% for f in fil %}
-            
+        <div class="center">
+            <div class="d-flex flex-wrap justify-content-center">
+                {% for f in fil %}
+                    {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
+                        {% if f.descripcion != "-" %}
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ f.Titula }}</h3>
+                                    <h5 class="card-title">{{ f.Correo_org }}</h5>
+                                    <h5 class="card-title">{{ f.Telefono }}</h5>
+                                    <h5 class="card-title">{{ f.Fecha_envio }}</h5>
+                                    <h5 class="card-title">{{ f.nom_empresa }}</h5>
+                                    <p class="card-text">{{ f.texto_t }}</p>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <a class="btn btn-primary mr-2" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
+                                        <a class="btn btn-primary mr-2" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
+                                        
+                                        <form method="post" action="">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="titulo_reportado" value="{{ f.Titula }}">
+                                            <button type="submit" name="reportar" class="btn btn-primary">Reportar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-            {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ f.Titula }}</h3>
-                        <h5 class="card-title">{{ f.Correo_org }}</h5>
-                        <h5 class="card-title">{{ f.Telefono }}</h5>
-                        <h5 class="card-title">{{ f.Fecha_envio }}</h5>
-                        <h5 class="card-title">{{ f.nom_empresa }}</h5>
-                        <p class="card-text">{{ f.descripcion }}</p>
-                        <a class="btn btn-primary" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
-                        <a class="btn btn-primary" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+                        {% endif %}
+
+                        {% if f.texto_t != "-" %}
+                            <div class="center">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h3 class="card-title">{{ f.Titula }}</h3>
+                                            <h5 class="card-title">{{ f.Correo_org }}</h5>
+                                            <h5 class="card-title">{{ f.Telefono }}</h5>
+                                            <h5 class="card-title">{{ f.Fecha_envio }}</h5>
+                                            <h5 class="card-title">{{ f.nom_empresa }}</h5>
+                                            <p class="card-text">{{ f.texto_t }}</p>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <a class="btn btn-primary mr-2" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
+                                                <a class="btn btn-primary mr-2" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
+                                                
+                                                <form method="post" action="">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="titulo_reportado" value="{{ f.Titula }}">
+                                                    <button type="submit" name="reportar" class="btn btn-primary">Reportar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
         <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
             <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>

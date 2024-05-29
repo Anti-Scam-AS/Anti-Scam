@@ -43,20 +43,21 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h5>¡Oh, no! El correo no se encuentra como correo de ninguna empresa</h5>
+                <h2>¡Oh, no! El correo no se encuentra como correo de ninguna empresa</h2>
                 <img src="/media/attention.png" class="img-fluid" alt="Error Image" style="max-width: 300px;">
             </div>
         </div>
     </div>
+
+    {% else %}
+        <h2 class="text-center">El correo {{ values.1 }} se encuentra como correo de la empresa {{ values.3 }} ✅</h2>
+            
+        <h1 class="text-center">Podrías estar buscando:</h5>
     {% endif %}
 
     <div>
         {% for f in fil %}
             {% if values.1 == f.Correo_org %}
-                <h5 class="text-center">El correo {{ f.Correo_org }} se encuentra como correo de la empresa {{ f.nom_empresa }} ✅</h5>
-        
-                <h1 class="text-center">Podrías estar buscando:</h5>
-                
                 <div class="center">
                     {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
                     <div class="center">

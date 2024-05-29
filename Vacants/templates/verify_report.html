@@ -51,7 +51,13 @@
                                 <h5 class="card-title">{{ f.Telefono_c }}</h5>
                                 <h5 class="card-title">{{ f.Fecha_envio_c }}</h5>
                                 <h5 class="card-title">{{ f.nom_empresa_c }}</h5>
-                                <p class="card-text">{{ f.descripcion_c }}</p>
+                                {% if f.descripcion_c != "-" %}
+                                    <p class="card-text">{{ f.descripcion_c }}</p>
+                                {% endif %}
+
+                                {% if f.texto_t_c != "-" %}
+                                    <p class="card-text">{{ f.texto_t_c }}</p>
+                                {% endif %}
         
                                 <div class="d-flex justify-content-center align-items-center" style="height: 10vh; margin-bottom: 50px;">
                                     <form method="post" action="">

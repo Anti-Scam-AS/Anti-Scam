@@ -42,30 +42,27 @@
 </head>
 <body>
     {% if not Tv %}
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <h5 class="text-center">¡Alto! el numero no se encuentra como telefono de ninguna empresa</h5>
-                <img src="/media/attention.png" class="img-fluid" alt="Error Image" style="max-width: 300px;">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="text-center">¡Alto! el numero no se encuentra como telefono de ninguna empresa</h2>
+                    <img src="/media/attention.png" class="img-fluid" alt="Error Image" style="max-width: 300px;">
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <h2 class="text-center">El numero {{ values.4 }} se encuentra como telefono de la empresa {{ values.3 }} ✅</h2>
+        <h1 class="text-center">Podrías estar buscando:</h1>
     {% endif %}
     
 
-    <div>
-        
-        
-        {% for f in fil %}
-            {% if values.4 == f.telefono %}
-                <h5 class="text-center">El numero {{ f.telefono }} se encuentra como telefono de la empresa {{ f.nom_empresa }} ✅</h5>
+    <div class="center">
+        <div class="d-flex justify-content-center flex-nowrap">
+            {% for f in fil %}
+                {% if values.4 == f.telefono %}
 
-                <h1 class = "text-center">Podrías estar buscando:</h5>
-
-                {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
-                <div class="center">
-                    <div class="d-flex flex-wrap justify-content-center">
-                        <div class="card" style="width: 18rem;">
+                    {% if values.0 == f.Correo_dest or values.2 == f.Titula or values.3 == f.nom_empresa or values.4 == f.Telefono or date == f.Fecha_envio %}
+                        <div class="card" style="width: 18rem; margin-right: 10px;">
                             <div class="card-body">
                                 <h3 class="card-title">{{ f.Titula }}</h3>
                                 <h5 class="card-title">{{ f.Correo_org }}</h5>
@@ -76,7 +73,6 @@
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a class="btn btn-primary mr-2" href="{{ f.url_empresa }}" role="button">Link Empresa</a>
                                     <a class="btn btn-primary mr-2" href="{{ f.url_vacante }}" role="button">Link Vacante</a>
-                                    
                                     <form method="post" action="">
                                         {% csrf_token %}
                                         <input type="hidden" name="titulo_reportado" value="{{ f.Titula }}">
@@ -85,24 +81,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
-
-        <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
-            <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>
+            {% endfor %}
         </div>
-        
     </div>
+
 
     
 
-    <div>
-        {% for f in fil %}
-            
-        {% endfor %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 10vh;">
+        <a class="btn btn-primary" href="/insert_v/analyzed" role="button">Verificar</a>
     </div>
     
     
